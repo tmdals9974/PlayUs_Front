@@ -26,17 +26,7 @@
             display: flex;
             flex-flow: column nowrap;
             margin-left: 10rem;
-        }
-
-        .h1-like {
-            font-size: 6.0rem;
-            color: white;
-        }
-
-        .h2-like {
-            font-size: 2.8rem;
-            color: white;
-            line-height: 5rem;
+            color:white;
         }
 
         .btn-start {
@@ -68,7 +58,7 @@
     <main class="container">
         <section class="sub-container">
             <span class="h1-like kanit semiBold">Play Us</span>
-            <p class="h2-like spoqaHanSans regular">웹서버 구현을 공부하지 않고<br>데이터 조작 & 리턴 가능한 서비스</p>
+            <p class="h3-like spoqaHanSans regular">웹서버 구현을 공부하지 않고<br>데이터 조작 & 리턴 가능한 서비스</p>
             <br>
             <input type="button" class="btn-start spoqaHanSans bold" value="시작하기" onclick="btn_start_click()">
         </section>
@@ -81,7 +71,7 @@
         var isLogin = <%= isLogin %>;
         var hasProject = <%= hasProject %>;
         function btn_start_click() {
-            location.href = isLogin ? "/login" : hasProject ? "/projectList" : "/createProject";
+            location.href = isLogin ? hasProject ? "/projectList" : "/createProject" :  "/login";
         }
     </script>
 </body>

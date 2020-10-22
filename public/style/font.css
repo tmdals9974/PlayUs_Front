@@ -75,3 +75,16 @@ html {
 .bold {
     font-weight: 700;
 }
+
+.h1-like {
+    font-size: 6.0rem;
+}
+
+.h2-like {
+    font-size: 3.5rem;
+}
+
+.h3-like {
+    font-size: 2.8rem;
+    line-height: 5rem;
+}
