@@ -13,6 +13,6 @@ app.all('/', (req, res) => {
     res.render(path.join(__dirname, "./views/main.ejs"), {isLogin : false, hasProject : false});
 });
 
-app.all('/', (req, res) => {
-    res.render(path.join(__dirname, "./views/login.ejs"));
+app.all('/login', (req, res) => {
+    res.render(path.join(__dirname, "./views/login.ejs"), {isLogin : false});
 })
