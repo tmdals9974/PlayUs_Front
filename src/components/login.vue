@@ -25,15 +25,15 @@
 
         <section v-show="!tryLogin" class="box" id="joinBox">
             <div class="userInfo">
-                <input type="text" class="input-userInfo kanit h4-like light" placeholder="EMAIL">
-                <input type="password" class="input-userInfo kanit h4-like light" placeholder="PW">
-                <input type="text" class="input-userInfo spoqaHanSans h4-like regular" placeholder="인증번호 입력">
+                <input type="text" class="input-userInfo kanit h4-like light" placeholder="EMAIL" id="joinBox_email">
+                <input type="password" class="input-userInfo kanit h4-like light" placeholder="PW" id="joinBox_pw">
+                <!-- <input type="text" class="input-userInfo spoqaHanSans h4-like regular" placeholder="인증번호 입력"> -->
             </div>
             <div class="checkBox_oneItem spoqaHanSans h5-like regular">
-                <input type="checkbox" id="chk_receiveEmail">
-                <label for="chk_receiveEmail">이메일 수신에 동의합니다.</label>
+                <input type="checkbox" id="chk_receiveMail">
+                <label for="chk_receiveMail">이메일 수신에 동의합니다.</label>
             </div>
-            <input type="button" class="kanit h3-like regular" value="SIGN IN">
+            <input type="button" class="kanit h3-like regular" value="SIGN IN" @click="join()">
         </section>
     </main>
 </template>
@@ -49,16 +49,53 @@ export default {
     methods: {
         login() {
             var email = document.querySelector('#loginBox_email').value.trim();
+            if (!email) { 
+                alert('이메일을 입력해주세요.'); 
+                document.querySelector('#loginBox_email').focus(); 
+                return;
+            }
+
             var password = document.querySelector('#loginBox_pw').value.trim();
-            if (!email || !password) return alert('입력이 올바르지 않음');
+            if (!password) { 
+                alert('비밀번호를 입력해주세요.'); 
+                document.querySelector('#loginBox_pw').focus(); 
+                return;
+            }
 
             this.$http.post('users/login', {email, password})
             .then(result => {
-                if (!result.data.success) 
-                    return alert(result.data.msg);
+                if (!result.data.success) return alert(result.data.msg);
             })
             .catch(err => {
-                alert('예상치 못한 에러 발생하였습니다.\r\n잠시 후에 다시 시도해주시기 바랍니다.');
+                alert(this.$errMsg);
+                console.log(err);
+            })
+        },
+        join() {
+            var email = document.querySelector('#joinBox_email').value.trim();
+            if (!email) { 
+                alert('이메일을 입력해주세요.'); 
+                document.querySelector('#joinBox_email').focus(); 
+                return;
+            }
+
+            var password = document.querySelector('#joinBox_pw').value.trim();
+            if (!password) { 
+                alert('비밀번호를 입력해주세요.'); 
+                document.querySelector('#joinBox_pw').focus(); 
+                return;
+            }
+
+            var receiveMail = document.querySelector('#chk_receiveMail').checked;
+
+            this.$http.post('users/', {email, password, receiveMail})
+            .then(result => {
+                if (!result.data.success) return alert(result.data.msg);
+                alert("성공적으로 가입되었습니다.");
+                this.tryLogin = true;
+            })
+            .catch(err => {
+                alert(this.$errMsg);
                 console.log(err);
             })
         }
