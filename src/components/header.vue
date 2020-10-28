@@ -1,5 +1,5 @@
 <template>
-    <header v-show="!isMainPage" v-bind:class="getHeaderClass(this.$store.state.isLogin)">
+    <header v-show="!isMainPage" v-bind:class="getHeaderClass($store.state.isLogin)">
         <span class="kanit h2-like" onclick="location.href='/'">PlayUs</span>
     </header>
 </template>
@@ -8,7 +8,7 @@
 export default {
     data() {
         return {
-            isMainPage : true
+            isMainPage : this.$router.currentRoute.path == '/' ? true : false
         }
     },
     methods: {
@@ -18,9 +18,9 @@ export default {
     },
     watch : {
         '$route' (to) {
-            this.isMainPage = to.path == '/' ? true : false
+            this.isMainPage = to.path == '/' ? true : false;
         }
-    },
+    }
 }
 </script>
 

@@ -12,14 +12,14 @@
 
         <section v-show="tryLogin" class="box" id="loginBox">
             <div class="userInfo">
-                <input type="text" class="input-userInfo kanit h4-like light" placeholder="ID">
-                <input type="password" class="input-userInfo kanit h4-like light" placeholder="PW">
+                <input type="text" class="input-userInfo kanit h4-like light" placeholder="EMAIL" id="loginBox_email">
+                <input type="password" class="input-userInfo kanit h4-like light" placeholder="PW" id="loginBox_pw">
             </div>
             <div class="checkBox_oneItem spoqaHanSans h5-like regular">
                 <input type="checkbox" id="chk_autoLogin">
                 <label for="chk_autoLogin">로그인 상태 유지</label>
             </div>
-            <input type="button" class="kanit h3-like regular" value="LOG IN">
+            <input type="button" class="kanit h3-like regular" value="LOG IN" @click="login()">
             <span class="spoqaHanSans regular" style="margin-top: 3vh; cursor: pointer; font-size: 1.6rem; text-decoration: underline; color:#757575">비밀번호 찾기</span>
         </section>
 
@@ -45,7 +45,24 @@ export default {
             tryLogin : true,
             titles : ['LOG IN', 'SIGN IN']
         }
-    }
+    },
+    methods: {
+        login() {
+            var email = document.querySelector('#loginBox_email').value.trim();
+            var password = document.querySelector('#loginBox_pw').value.trim();
+            if (!email || !password) return alert('입력이 올바르지 않음');
+
+            this.$http.post('users/login', {email, password})
+            .then(result => {
+                if (!result.data.success) 
+                    return alert(result.data.msg);
+            })
+            .catch(err => {
+                alert('예상치 못한 에러 발생하였습니다.\r\n잠시 후에 다시 시도해주시기 바랍니다.');
+                console.log(err);
+            })
+        }
+    },
 }
 </script>
 
