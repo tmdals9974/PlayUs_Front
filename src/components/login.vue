@@ -25,7 +25,7 @@
 
         <section v-show="!tryLogin" class="box" id="joinBox">
             <div class="userInfo">
-                <input type="text" class="input-userInfo kanit h4-like light" placeholder="EMAIL" id="joinBox_email">
+                <input type="text" class="input-userInfo kanit h4-like light" placeholder="EMAIL" id="joinBox_email" @blur="idCheck()">
                 <input type="password" class="input-userInfo kanit h4-like light" placeholder="PW" id="joinBox_pw">
                 <!-- <input type="text" class="input-userInfo spoqaHanSans h4-like regular" placeholder="인증번호 입력"> -->
             </div>
@@ -43,54 +43,83 @@ export default {
     data() {
         return {
             tryLogin : true,
-            titles : ['LOG IN', 'SIGN IN']
+            titles : ['LOG IN', 'SIGN IN'],
+            idChecked : false
         }
     },
     methods: {
         login() {
-            var email = document.querySelector('#loginBox_email').value.trim();
+            var input_email = document.querySelector('#loginBox_email');
+            var email = input_email.value.trim();
+
             if (!email) { 
                 alert('이메일을 입력해주세요.'); 
-                document.querySelector('#loginBox_email').focus(); 
-                return;
+                return input_email.focus(); 
             }
 
-            var password = document.querySelector('#loginBox_pw').value.trim();
+            var input_password = document.querySelector('#loginBox_pw');
+            var password = input_password.value.trim();
+
             if (!password) { 
                 alert('비밀번호를 입력해주세요.'); 
-                document.querySelector('#loginBox_pw').focus(); 
-                return;
+                return input_password.focus();
             }
 
             this.$http.post('users/login', {email, password})
             .then(result => {
-                if (!result.data.success) return alert(result.data.msg);
+                if (!result.data.success) 
+                    return alert(result.data.msg);
             })
             .catch(err => {
                 alert(this.$errMsg);
                 console.log(err);
             })
         },
+
+        idCheck() {
+            var input_email = document.querySelector('#joinBox_email');
+            var email = input_email.value.trim();
+
+            if (!email) return;
+
+            this.$http.get(`users/check/${email}`)
+            .then(result => {
+                if (result.data.success) {
+                    this.idChecked = false;
+                    return alert("이미 가입된 이메일입니다.");
+                }
+                this.idChecked = true;
+            })
+            .catch(err => {
+                alert(this.$errMsg);
+                console.log(err);
+            })
+        },
+
         join() {
-            var email = document.querySelector('#joinBox_email').value.trim();
+            if (!this.idChecked)
+                return alert("이미 가입된 이메일입니다.");
+
+            var input_email = document.querySelector('#joinBox_email');
+            var email = input_email.value.trim();
             if (!email) { 
                 alert('이메일을 입력해주세요.'); 
-                document.querySelector('#joinBox_email').focus(); 
-                return;
+                return input_email.focus(); 
             }
 
-            var password = document.querySelector('#joinBox_pw').value.trim();
+            var input_password = document.querySelector('#joinBox_pw');
+            var password = input_password.value.trim();
             if (!password) { 
                 alert('비밀번호를 입력해주세요.'); 
-                document.querySelector('#joinBox_pw').focus(); 
-                return;
+                return input_password.focus(); 
             }
 
             var receiveMail = document.querySelector('#chk_receiveMail').checked;
 
             this.$http.post('users/', {email, password, receiveMail})
             .then(result => {
-                if (!result.data.success) return alert(result.data.msg);
+                if (!result.data.success) 
+                    return alert(result.data.msg);
                 alert("성공적으로 가입되었습니다.");
                 this.tryLogin = true;
             })
