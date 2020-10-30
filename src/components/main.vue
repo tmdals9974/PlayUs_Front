@@ -16,7 +16,7 @@
 export default {
     methods: {
         btn_start_click() {
-            this.$router.push(this.$store.state.isLogin ? this.$store.state.hasProject ? "/projectList" : "/createProject" :  "/login");
+            this.$router.push(this.$store.getters.isLogin ? this.$store.getters.hasProject ? "/projectList" : "/createProject" :  "/login");
         }
     }
 }

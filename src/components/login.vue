@@ -69,15 +69,17 @@ export default {
             .then(result => {
                 if (!result.data.success) 
                     return alert(result.data.msg);
-                //store - login true처리, project 개수에 따라 url 다르게 이동처리 필요
-                this.$router.push('/createProject');
+
+                var user = { email, project : result.data.details };
+                this.$store.commit('setUser', user);
+                this.$router.push(this.$store.getters.hasProject ? '/projects' : '/createProject');
             })
             .catch(err => {
                 alert(this.$errMsg);
                 console.log(err);
             })
         },
-
+        
         idCheck() {
             var input_email = document.querySelector('#joinBox_email');
             var email = input_email.value.trim();

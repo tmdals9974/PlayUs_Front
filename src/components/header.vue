@@ -1,5 +1,5 @@
 <template>
-    <header v-show="!isMainPage" v-bind:class="getHeaderClass($store.state.isLogin)">
+    <header v-show="!isMainPage" v-bind:class="getHeaderClass($store.getters.isLogin)">
         <span class="kanit h2-like" onclick="location.href='/'">PlayUs</span>
     </header>
 </template>
