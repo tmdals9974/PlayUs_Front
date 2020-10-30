@@ -69,6 +69,8 @@ export default {
             .then(result => {
                 if (!result.data.success) 
                     return alert(result.data.msg);
+                //store - login true처리, project 개수에 따라 url 다르게 이동처리 필요
+                this.$router.push('/createProject');
             })
             .catch(err => {
                 alert(this.$errMsg);
@@ -218,19 +220,20 @@ export default {
     }
 
     .checkBox_oneItem > input[type="checkbox"] {
-        width : 30px;
-        height: 30px;
-        border: 1px solid #bcbcbc;
-        border-radius: 4px;
-        margin-right: 0.5vw;
-        cursor: pointer;
+        display: none;
     }
 
-    .checkBox_oneItem > label {
+    .checkBox_oneItem > input[type="checkbox"] + label {
         cursor: pointer;
+        padding-left: 40px;
+        background: url('../assets/images/checkbox.png') left/30px no-repeat;
     }
 
     input::placeholder {
-        color : #9e9e9e
+        color : #9e9e9e;
+    }
+
+    input[type="checkbox"]:checked + label {
+        background-image: url('../assets/images/checked_checkbox.png');
     }
 </style>
