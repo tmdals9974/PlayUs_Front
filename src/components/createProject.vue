@@ -10,7 +10,7 @@
             <article class="span-input-set">
                 <span class="spoqaHanSans h5-like">리턴 타입</span>
                 <div class="items Kanit regular h5-like">
-                    <input type="radio" name="returnType" id="JSON" value="0" checked v-model="returnType"/> 
+                    <input type="radio" name="returnType" id="JSON" value="0" v-model="returnType"/> 
                     <label for="JSON">JSON</label>
                     <input type="radio" name="returnType" id="XML" value="1" v-model="returnType">
                     <label for="XML">XML</label>
@@ -35,7 +35,7 @@ export default {
     data() {
         return {
             projectName: '',
-            returnType: '',
+            returnType: 0,
             isLock : false
         }
     },
@@ -51,7 +51,15 @@ export default {
             var lock = this.isLock;
             this.$http.post('projects', {name, returnType, lock})
             .then(result => {
-                console.log(result);
+                if (!result.data.success) 
+                    return alert(result.data.msg);
+
+                this.$store.commit('addProject', result.data.details);
+                this.$router.push('/projects');
+            })
+            .catch(err => {
+                alert(this.$errMsg);
+                console.log(err);
             })
         }
     }

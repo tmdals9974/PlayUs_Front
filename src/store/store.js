@@ -31,6 +31,9 @@ export const store = new Vuex.Store({
     mutations : {
         setUser (state, payload) {
             state.user = payload;
+        },
+        addProject (state, payload) {
+            state.user.project.push(payload);
         }
     }
 })
