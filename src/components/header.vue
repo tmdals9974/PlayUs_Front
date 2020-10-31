@@ -1,6 +1,6 @@
 <template>
     <header v-show="!isMainPage" v-bind:class="getHeaderClass($store.getters.isLogin)">
-        <span class="kanit h2-like" onclick="location.href='/'">PlayUs</span>
+        <span class="kanit h2-like" onclick="location.href='/'">Play Us</span>
     </header>
 </template>
 

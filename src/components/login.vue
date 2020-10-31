@@ -1,6 +1,6 @@
 <template>
-        <main>
-        <span class="kanit" id="title" style="letter-spacing: 1px; font-size: 4.0rem;">{{titles[tryLogin ? 0 : 1]}}</span>
+    <main class="main-center" style="margin-top:30px;">
+        <span class="kanit" id="title" style="letter-spacing: 1px; font-size: 4.0rem; color: #5f62e2;">{{titles[tryLogin ? 0 : 1]}}</span>
         <section class="tabBtn spoqaHanSans bold">
             <div v-bind:class="{active : tryLogin}" id="tab_Login" @click="tryLogin=true">
                 회원 로그인
@@ -10,20 +10,20 @@
             </div>
         </section>
 
-        <section v-show="tryLogin" class="box" id="loginBox">
+        <section v-show="tryLogin" class="center-box" id="loginBox">
             <div class="userInfo">
                 <input type="text" class="input-userInfo kanit h4-like light" placeholder="EMAIL" id="loginBox_email">
                 <input type="password" class="input-userInfo kanit h4-like light" placeholder="PW" id="loginBox_pw">
             </div>
             <div class="checkBox_oneItem spoqaHanSans h5-like regular">
                 <input type="checkbox" id="chk_autoLogin">
-                <label for="chk_autoLogin">로그인 상태 유지</label>
+                <label class="checkBox" for="chk_autoLogin" style="letter-spacing: 0.14rem;">로그인 상태 유지</label>
             </div>
-            <input type="button" class="kanit h3-like regular" value="LOG IN" @click="login()">
+            <input type="button" class="themeButton kanit h3-like regular" value="LOG IN" @click="login()">
             <span class="spoqaHanSans regular" style="margin-top: 3vh; cursor: pointer; font-size: 1.6rem; text-decoration: underline; color:#757575">비밀번호 찾기</span>
         </section>
 
-        <section v-show="!tryLogin" class="box" id="joinBox">
+        <section v-show="!tryLogin" class="center-box" id="joinBox">
             <div class="userInfo">
                 <input type="text" class="input-userInfo kanit h4-like light" placeholder="EMAIL" id="joinBox_email" @blur="idCheck()">
                 <input type="password" class="input-userInfo kanit h4-like light" placeholder="PW" id="joinBox_pw">
@@ -31,9 +31,9 @@
             </div>
             <div class="checkBox_oneItem spoqaHanSans h5-like regular">
                 <input type="checkbox" id="chk_receiveMail">
-                <label for="chk_receiveMail">이메일 수신에 동의합니다.</label>
+                <label class="checkBox" for="chk_receiveMail">이메일 수신에 동의합니다.</label>
             </div>
-            <input type="button" class="kanit h3-like regular" value="SIGN IN" @click="join()">
+            <input type="button" class="themeButton kanit h3-like regular" style="letter-spacing: 0.14rem;" value="SIGN IN" @click="join()">
         </section>
     </main>
 </template>
@@ -137,28 +137,6 @@ export default {
 </script>
 
 <style scoped>
-    main {
-        position: absolute;
-        top:23%;
-        left:35%;
-        display: flex;
-        flex-flow: column nowrap;
-        justify-content: center;
-        align-items: center;
-        width: 30%;
-    }
-
-    main span {
-        color : #5F62E2;
-    }
-
-    .box {
-        width: 100%;
-        display:flex;
-        flex-flow: column nowrap;
-        justify-content: center;
-        align-items: center;
-    }
 
     .tabBtn {
         display:flex;
@@ -196,20 +174,6 @@ export default {
         border:solid 1.0px #bdbdbd;
         border-radius: 4px;
     }
-
-    input[type="button"] {
-        margin-top : 3vh;
-        letter-spacing: 0.14rem;
-        background-color: #5F62E2;
-        color: white;
-        width: 100%;
-        padding-top: 1vw;
-        padding-bottom: 1vw;
-        border-radius: 4px;
-        border-style: none;
-        cursor: pointer;
-        outline: none;
-    }
     
     .checkBox_oneItem {
         display: flex;
@@ -221,21 +185,4 @@ export default {
         margin-bottom: 1.5vh;
     }
 
-    .checkBox_oneItem > input[type="checkbox"] {
-        display: none;
-    }
-
-    .checkBox_oneItem > input[type="checkbox"] + label {
-        cursor: pointer;
-        padding-left: 40px;
-        background: url('../assets/images/checkbox.png') left/30px no-repeat;
-    }
-
-    input::placeholder {
-        color : #9e9e9e;
-    }
-
-    input[type="checkbox"]:checked + label {
-        background-image: url('../assets/images/checked_checkbox.png');
-    }
 </style>
