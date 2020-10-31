@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import createPersistedState from 'vuex-persistedstate';
 
 Vue.use(Vuex); //전역사용 선언
 
@@ -11,7 +12,7 @@ const storage = {
 }
 
 export const store = new Vuex.Store({
-    state : {
+    state: {
         user: storage.autoLogin()
     },
     getters: {
@@ -28,12 +29,15 @@ export const store = new Vuex.Store({
             return true;
         }
     },
-    mutations : {
-        setUser (state, payload) {
+    mutations: {
+        setUser(state, payload) {
             state.user = payload;
         },
-        addProject (state, payload) {
+        addProject(state, payload) {
             state.user.project.push(payload);
         }
-    }
+    },
+    plugins: [
+        createPersistedState({ storage: window.sessionStorage })
+    ]
 })
