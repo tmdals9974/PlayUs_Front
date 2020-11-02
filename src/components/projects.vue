@@ -10,7 +10,7 @@
 
                 <article class="project" v-for="(item, index) in $store.state.user.project" v-bind:key="index">
                     <span class="spoqaHanSans bold h5-like">{{item.name}}</span>
-                    <span class="spoqaHanSans regular h6-like">세부 내용</span>
+                    <span class="spoqaHanSans regular h6-like" style="white-space: pre-line">{{item.content}}</span>
                 </article>
             </section>
         </div>

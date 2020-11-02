@@ -25,6 +25,10 @@
                         <span>{{lockMode}}</span>
                     </div>
                 </article>
+                <article class="span-input-set" style="height:auto;">
+                    <span class="spoqaHanSans h5-like">프로젝트 소개</span>
+                    <textarea class="items spoqaHanSans h5-like" width="100%" rows="3" v-model="content"></textarea>
+                </article>
             </section>
             
             <input type="button" class="themeButton spoqaHanSans h4-like bold" style="line-height:5vh; margin-top:7vh;" value="생성하기" @click="postTest()">
@@ -38,7 +42,8 @@ export default {
         return {
             projectName: '',
             returnType: 0,
-            isLock : false
+            isLock : false,
+            content : ''
         }
     },
     computed: {
@@ -51,7 +56,9 @@ export default {
             var name = this.projectName;
             var returnType = this.returnType;
             var lock = this.isLock;
-            this.$http.post('projects', {name, returnType, lock})
+            var content = this.content;
+
+            this.$http.post('projects', {name, returnType, lock, content})
             .then(result => {
                 if (!result.data.success) 
                     return alert(result.data.msg);
