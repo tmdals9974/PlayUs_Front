@@ -3,45 +3,13 @@
         <div class="sub-container-1150">
             <span class="spoqaHanSans bold h4-like">프로젝트 목록</span>
             <section class="projectList spoqaHanSans">
-                <article class="create-project" style="display:flex; flex-flow: column nowrap; align-items:center; justify-content: center;">
+                <article class="create-project" @click="$router.push('/createProject')">
                     <img src="../assets/images/project_create.png" alt="프로젝트 생성하기">
                     <span class="spoqaHanSans bold h5-like" style="margin-top:1vh;">프로젝트 생성하기</span>
                 </article>
 
-                <article class="project">
-                    <span class="spoqaHanSans bold h5-like">프로젝트 이름</span>
-                    <span class="spoqaHanSans regular h6-like">세부 내용</span>
-                </article>
-                <article class="project">
-                    <span class="spoqaHanSans bold h5-like">프로젝트 이름</span>
-                    <span class="spoqaHanSans regular h6-like">세부 내용</span>
-                </article>
-                <article class="project">
-                    <span class="spoqaHanSans bold h5-like">프로젝트 이름</span>
-                    <span class="spoqaHanSans regular h6-like">세부 내용</span>
-                </article>
-                <article class="project">
-                    <span class="spoqaHanSans bold h5-like">프로젝트 이름</span>
-                    <span class="spoqaHanSans regular h6-like">세부 내용</span>
-                </article>
-                <article class="project">
-                    <span class="spoqaHanSans bold h5-like">프로젝트 이름</span>
-                    <span class="spoqaHanSans regular h6-like">세부 내용</span>
-                </article>
-                <article class="project">
-                    <span class="spoqaHanSans bold h5-like">프로젝트 이름</span>
-                    <span class="spoqaHanSans regular h6-like">세부 내용</span>
-                </article>
-                <article class="project">
-                    <span class="spoqaHanSans bold h5-like">프로젝트 이름</span>
-                    <span class="spoqaHanSans regular h6-like">세부 내용</span>
-                </article>
-                <article class="project">
-                    <span class="spoqaHanSans bold h5-like">프로젝트 이름</span>
-                    <span class="spoqaHanSans regular h6-like">세부 내용</span>
-                </article>
-                <article class="project">
-                    <span class="spoqaHanSans bold h5-like">프로젝트 이름</span>
+                <article class="project" v-for="(item, index) in $store.state.user.project" v-bind:key="index">
+                    <span class="spoqaHanSans bold h5-like">{{item.name}}</span>
                     <span class="spoqaHanSans regular h6-like">세부 내용</span>
                 </article>
             </section>
@@ -75,6 +43,11 @@ export default {
     background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='6' ry='6' stroke='%23BDBDBDFF' stroke-width='4' stroke-dasharray='10%2c12' stroke-dashoffset='100' stroke-linecap='square'/%3e%3c/svg%3e");
     border-radius: 6px;
     cursor: pointer;
+
+    display:flex; 
+    flex-flow: column nowrap; 
+    align-items:center; 
+    justify-content: center;
 }
 
 .project {
