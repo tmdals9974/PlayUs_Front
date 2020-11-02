@@ -1,32 +1,34 @@
 <template>
-    <main class="main-center">
-        <span class="spoqaHanSans bold h2-like">프로젝트 생성하기</span>
+    <main class="main-container">
+        <div class="sub-container-580">
+            <span class="spoqaHanSans bold h2-like">프로젝트 생성하기</span>
 
-        <section class="center-box" style="margin-top:8vh;">
-            <article class="span-input-set spoqaHanSans h5-like">
-                <span>프로젝트 이름</span>
-                <input class="items" type="text" v-model="projectName"/>
-            </article>
-            <article class="span-input-set">
-                <span class="spoqaHanSans h5-like">리턴 타입</span>
-                <div class="items Kanit regular h5-like">
-                    <input type="radio" name="returnType" id="JSON" value="0" v-model="returnType"/> 
-                    <label for="JSON">JSON</label>
-                    <input type="radio" name="returnType" id="XML" value="1" v-model="returnType">
-                    <label for="XML">XML</label>
-                </div>
-            </article>
-            <article class="span-input-set">
-                <span class="spoqaHanSans h5-like">잠금모드</span>
-                <div class="items spoqaHanSans h5-like">
-                    <input type="checkbox" id="lock" v-model="isLock"/>
-                    <label class="toggle-switch" for="lock"/>
-                    <span>{{lockMode}}</span>
-                </div>
-            </article>
-        </section>
-        
-        <input type="button" class="themeButton spoqaHanSans h4-like bold" style="line-height:5vh; margin-top:7vh;" value="생성하기" @click="postTest()">
+            <section class="center-box" style="margin-top:8vh;">
+                <article class="span-input-set spoqaHanSans h5-like">
+                    <span>프로젝트 이름</span>
+                    <input class="items" type="text" v-model="projectName"/>
+                </article>
+                <article class="span-input-set">
+                    <span class="spoqaHanSans h5-like">리턴 타입</span>
+                    <div class="items Kanit regular h5-like">
+                        <input type="radio" name="returnType" id="JSON" value="0" v-model="returnType"/> 
+                        <label for="JSON">JSON</label>
+                        <input type="radio" name="returnType" id="XML" value="1" v-model="returnType">
+                        <label for="XML">XML</label>
+                    </div>
+                </article>
+                <article class="span-input-set">
+                    <span class="spoqaHanSans h5-like">잠금모드</span>
+                    <div class="items spoqaHanSans h5-like">
+                        <input type="checkbox" id="lock" v-model="isLock"/>
+                        <label class="toggle-switch" for="lock"/>
+                        <span>{{lockMode}}</span>
+                    </div>
+                </article>
+            </section>
+            
+            <input type="button" class="themeButton spoqaHanSans h4-like bold" style="line-height:5vh; margin-top:7vh;" value="생성하기" @click="postTest()">
+        </div>
     </main>
 </template>
 
@@ -113,6 +115,7 @@ label.toggle-switch {
 	border-radius: 100px;
 	position: relative;
     margin-right: 10px;
+    cursor: pointer;
 }
 
 label.toggle-switch:after {

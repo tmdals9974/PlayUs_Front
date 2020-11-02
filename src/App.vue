@@ -19,7 +19,6 @@ export default {
 <style>
 body {
     height: 100vh;
-    overflow: hidden;
     margin: 0 auto;
 }
 
@@ -27,18 +26,32 @@ body {
     height: 100%;
 }
 
-.main-center {
-    position: absolute;
-    top: 23%;
-    left: 35%;
+.main-container {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.sub-container-580 {
+    margin-top: 10vh;
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
-    width: 30%;
+    width: 580px;
 }
 
-.main-center .center-box {
+.sub-container-1150 {
+    margin-top: 10vh;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    /* align-items: center; */
+    width: 1150px;
+}
+
+.center-box {
     width: 100%;
     display: flex;
     flex-flow: column nowrap;
@@ -208,5 +221,9 @@ html {
 
 .h5-like {
   font-size: 2rem;
+}
+
+.h6-like {
+  font-size: 1.6rem;
 }
 </style>

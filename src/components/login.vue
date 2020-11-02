@@ -1,40 +1,42 @@
 <template>
-    <main class="main-center" style="margin-top:30px;">
-        <span class="kanit" id="title" style="letter-spacing: 1px; font-size: 4.0rem; color: #5f62e2;">{{titles[tryLogin ? 0 : 1]}}</span>
-        <section class="tabBtn spoqaHanSans bold">
-            <div v-bind:class="{active : tryLogin}" id="tab_Login" @click="tryLogin=true">
-                회원 로그인
-            </div>
-            <div v-bind:class="{active : !tryLogin}" id="tab_Join" @click="tryLogin=false">
-                회원 가입
-            </div>
-        </section>
+    <main class="main-container" style="margin-top:30px;">
+        <div class="sub-container-580">
+            <span class="kanit" id="title" style="letter-spacing: 1px; font-size: 4.0rem; color: #5f62e2;">{{titles[tryLogin ? 0 : 1]}}</span>
+            <section class="tabBtn spoqaHanSans bold">
+                <div v-bind:class="{active : tryLogin}" id="tab_Login" @click="tryLogin=true">
+                    회원 로그인
+                </div>
+                <div v-bind:class="{active : !tryLogin}" id="tab_Join" @click="tryLogin=false">
+                    회원 가입
+                </div>
+            </section>
 
-        <section v-show="tryLogin" class="center-box" id="loginBox">
-            <div class="userInfo">
-                <input type="text" class="input-userInfo kanit h4-like light" placeholder="EMAIL" id="loginBox_email">
-                <input type="password" class="input-userInfo kanit h4-like light" placeholder="PW" id="loginBox_pw">
-            </div>
-            <div class="checkBox_oneItem spoqaHanSans h5-like regular">
-                <input type="checkbox" id="chk_autoLogin">
-                <label class="checkBox" for="chk_autoLogin" style="letter-spacing: 0.14rem;">로그인 상태 유지</label>
-            </div>
-            <input type="button" class="themeButton kanit h3-like regular" value="LOG IN" @click="login()">
-            <span class="spoqaHanSans regular" style="margin-top: 3vh; cursor: pointer; font-size: 1.6rem; text-decoration: underline; color:#757575">비밀번호 찾기</span>
-        </section>
+            <section v-show="tryLogin" class="center-box" id="loginBox">
+                <div class="userInfo">
+                    <input type="text" class="input-userInfo kanit h4-like light" placeholder="EMAIL" id="loginBox_email">
+                    <input type="password" class="input-userInfo kanit h4-like light" placeholder="PW" id="loginBox_pw">
+                </div>
+                <div class="checkBox_oneItem spoqaHanSans h5-like regular">
+                    <input type="checkbox" id="chk_autoLogin">
+                    <label class="checkBox" for="chk_autoLogin" style="letter-spacing: 0.14rem;">로그인 상태 유지</label>
+                </div>
+                <input type="button" class="themeButton kanit h3-like regular" value="LOG IN" @click="login()">
+                <span class="spoqaHanSans regular" style="margin-top: 3vh; cursor: pointer; font-size: 1.6rem; text-decoration: underline; color:#757575">비밀번호 찾기</span>
+            </section>
 
-        <section v-show="!tryLogin" class="center-box" id="joinBox">
-            <div class="userInfo">
-                <input type="text" class="input-userInfo kanit h4-like light" placeholder="EMAIL" id="joinBox_email" @blur="idCheck()">
-                <input type="password" class="input-userInfo kanit h4-like light" placeholder="PW" id="joinBox_pw">
-                <!-- <input type="text" class="input-userInfo spoqaHanSans h4-like regular" placeholder="인증번호 입력"> -->
-            </div>
-            <div class="checkBox_oneItem spoqaHanSans h5-like regular">
-                <input type="checkbox" id="chk_receiveMail">
-                <label class="checkBox" for="chk_receiveMail">이메일 수신에 동의합니다.</label>
-            </div>
-            <input type="button" class="themeButton kanit h3-like regular" style="letter-spacing: 0.14rem;" value="SIGN IN" @click="join()">
-        </section>
+            <section v-show="!tryLogin" class="center-box" id="joinBox">
+                <div class="userInfo">
+                    <input type="text" class="input-userInfo kanit h4-like light" placeholder="EMAIL" id="joinBox_email" @blur="idCheck()">
+                    <input type="password" class="input-userInfo kanit h4-like light" placeholder="PW" id="joinBox_pw">
+                    <!-- <input type="text" class="input-userInfo spoqaHanSans h4-like regular" placeholder="인증번호 입력"> -->
+                </div>
+                <div class="checkBox_oneItem spoqaHanSans h5-like regular">
+                    <input type="checkbox" id="chk_receiveMail">
+                    <label class="checkBox" for="chk_receiveMail">이메일 수신에 동의합니다.</label>
+                </div>
+                <input type="button" class="themeButton kanit h3-like regular" style="letter-spacing: 0.14rem;" value="SIGN IN" @click="join()">
+            </section>
+        </div>
     </main>
 </template>
 
