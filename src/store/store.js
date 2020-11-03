@@ -27,6 +27,12 @@ export const store = new Vuex.Store({
             if (state.user.project.length === 0)
                 return false;
             return true;
+        },
+        getEmail(state) {
+            if (state.user === null)
+                return '';
+            var id = state.user.email.split('@')[0];
+            return id.length < 6 ? id : id.substr(0, 5);            
         }
     },
     mutations: {
@@ -35,6 +41,21 @@ export const store = new Vuex.Store({
         },
         addProject(state, payload) {
             state.user.project.push(payload);
+        }
+    },
+    actions: {
+        logout(context, payload) {
+            payload.$http.post('users/logout')
+            .then(result => {
+                if (!result.data.success)
+                    return alert("로그아웃에 실패하였습니다.");
+                context.commit('setUser', null);
+                payload.$router.push('/login');
+            })
+            .catch(err => {
+                alert(this.$errMsg);
+                console.log(err);
+            })
         }
     },
     plugins: [
