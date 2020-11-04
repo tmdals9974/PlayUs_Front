@@ -18,7 +18,7 @@
                 </div>
                 <div class="checkBox_oneItem spoqaHanSans h5-like regular">
                     <input type="checkbox" id="chk_autoLogin">
-                    <label class="checkBox" for="chk_autoLogin" style="letter-spacing: 0.14rem;">로그인 상태 유지</label>
+                    <label class="checkBox" for="chk_autoLogin" >로그인 상태 유지</label>
                 </div>
                 <input type="button" class="themeButton kanit h3-like regular" value="LOG IN" @click="login()">
                 <span class="spoqaHanSans regular" style="margin-top: 3vh; cursor: pointer; font-size: 1.6rem; text-decoration: underline; color:#757575">비밀번호 찾기</span>

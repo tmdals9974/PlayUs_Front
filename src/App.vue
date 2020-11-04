@@ -82,8 +82,8 @@ input[type="button"].themeButton {
     background-color: #5F62E2;
     color: white;
     width: 100%;
-    padding-top: 1vw;
-    padding-bottom: 1vw;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
     border-radius: 4px;
     border-style: none;
     cursor: pointer;
