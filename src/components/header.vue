@@ -1,6 +1,6 @@
 <template>
     <header v-show="!isMainPage" v-bind:class="getHeaderClass($store.getters.isLogin)">
-        <span class="kanit h2-like" id="logo_text" @click="$router.push('/');">Play Us</span>
+        <span class="kanit h2-like" id="logo_text" @click="logo_clicked()">Play Us</span>
         <section class="user" v-show="$store.getters.isLogin">
             <div class="profile">
                 <div class="circle-in-text kanit h5-like">{{ $store.getters.getEmail }}</div>
@@ -23,6 +23,11 @@ export default {
         }
     },
     methods: {
+        logo_clicked() {
+            if (this.$router.currentRoute.path == '/projects')
+                return;
+            this.$router.push(this.$store.getters.isLogin ? '/projects' : '/');
+        },
         getHeaderClass(isLogin) {
             return isLogin ? 'is-login' : 'need-login';
         }
@@ -50,7 +55,7 @@ header {
 }
 
 .need-login {
-    background: white;
+    background: #f5f5f5;
     color : #5F62E2;
 }
 

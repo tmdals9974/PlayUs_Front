@@ -20,6 +20,7 @@ export default {
 body {
     height: 100vh;
     margin: 0 auto;
+    background-color: #f5f5f5;
 }
 
 #app {
@@ -39,16 +40,17 @@ body {
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
-    width: 580px;
+    max-width: 580px;
 }
 
-.sub-container-1150 {
+.sub-container-1180 {
     margin-top: 10vh;
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
     /* align-items: center; */
-    width: 1150px;
+    max-width: 1180px;
+    padding: 0 30px;
 }
 
 .center-box {
@@ -183,7 +185,7 @@ html {
 
 .spoqaHanSans {
   font-family: "SpoqaHanSans";
-  letter-spacing: -0.15rem;
+  letter-spacing: -0.1rem;
 }
 
 .light {

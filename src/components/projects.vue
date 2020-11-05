@@ -1,6 +1,6 @@
 <template>
     <main class="main-container">
-        <div class="sub-container-1150">
+        <div class="sub-container-1180">
             <span class="spoqaHanSans bold h4-like">프로젝트 목록</span>
             <section class="projectList spoqaHanSans">
                 <article class="create-project" @click="$router.push('/createProject')">
@@ -8,7 +8,7 @@
                     <span class="spoqaHanSans bold h5-like" style="margin-top:1vh;">프로젝트 생성하기</span>
                 </article>
 
-                <article class="project" v-for="(item, index) in $store.state.user.project" v-bind:key="index">
+                <article class="project" v-for="(item, index) in $store.state.user.project" v-bind:key="index" @click="$router.push({ name: 'project', params: { name: item.name }})">
                     <span class="spoqaHanSans bold h5-like">{{item.name}}</span>
                     <span class="spoqaHanSans regular h6-like" style="white-space: pre-line">{{item.content}}</span>
                 </article>
@@ -23,13 +23,13 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .projectList {
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
     align-items: flex-start;
-    width: 100%;
+    max-width: 100%;
 }
 
 .projectList > * {

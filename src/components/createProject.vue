@@ -75,7 +75,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .span-input-set {
     width: 100%;
     height: 4vh;
