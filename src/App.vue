@@ -50,7 +50,7 @@ body {
     justify-content: center;
     /* align-items: center; */
     max-width: 1180px;
-    padding: 0 30px;
+    padding: 0 30px 3vh;
 }
 
 .center-box {

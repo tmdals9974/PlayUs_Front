@@ -13,6 +13,25 @@
                     <span class="spoqaHanSans regular h6-like" style="white-space: pre-line">{{item.content}}</span>
                 </article>
             </section>
+
+            <span class="spoqaHanSans bold h4-like" style="margin-top:10vh;">프로젝트 차트</span>
+            <section class="projectStats spoqaHanSans">
+                <article class="stats bold h5-like">
+                    <div class="container">
+                        objects
+                    </div>
+                </article>
+                <article class="stats bold h5-like">
+                    <div class="container">
+                        avgObjSize
+                    </div>
+                </article>
+                <article class="stats bold h5-like" style="width:100%">
+                    <div class="container">
+                        frequencyOfUse
+                    </div>
+                </article>
+            </section>
         </div>
     </main>
 </template>
@@ -69,5 +88,26 @@ export default {
 
 .project > span:last-child {
     margin-bottom : 30px;
+}
+
+.projectStats {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 100%;
+}
+
+.stats {
+    width:575px;
+    height:350px;
+    margin-top: 3vh;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0px 2px 3px 2px #c9c9c9;
+}
+
+.stats > .container {
+    margin: 3vh 1.5vw;
 }
 </style>

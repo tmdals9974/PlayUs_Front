@@ -98,7 +98,6 @@ export default {
     flex-flow: row wrap;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom : 2vh;
 }
 
 .card {
