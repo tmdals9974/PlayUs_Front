@@ -19,16 +19,19 @@
                 <article class="stats bold h5-like">
                     <div class="container">
                         objects
+                        <canvas id="chart_objects" />
                     </div>
                 </article>
                 <article class="stats bold h5-like">
                     <div class="container">
                         avgObjSize
+                        <canvas id="chart_avgObjSize"/>
                     </div>
                 </article>
                 <article class="stats bold h5-like" style="width:100%">
                     <div class="container">
                         frequencyOfUse
+                        <canvas id="chart_frequencyOfUse"/>
                     </div>
                 </article>
             </section>
@@ -37,8 +40,51 @@
 </template>
 
 <script>
-export default {
+import Chart from "chart.js";
 
+export default {
+    methods: {
+        extract(objArr, key) {
+            var resultArr = [];
+            for (var obj in objArr) {
+                resultArr.push(objArr[obj][key]);
+            }
+            return resultArr;
+        },
+        createChart(chartId, chartData) {
+            var ctx = document.getElementById(chartId);
+            new Chart(ctx, {
+                type: chartData.type,
+                data: chartData.data,
+                options: chartData.options
+            });
+        }
+    },
+    mounted() {
+        this.$http.get('projects/stats')
+        .then(result => {
+            if (!result.data.success)
+                return alert(this.$errMsg);
+            var chartData = {
+                type: 'doughnut',
+                //data: this.extract(result.data.details, 'objects'),
+                data: { 
+                    datasets: [{ backgroundColor: ['#5f62e2','#7679f3','#9b9dfd', '#babbff', '#dedfff'], weight: 1, data: [40, 30, 20, 7, 3] }],
+                    labels: ['프로젝트 1','프로젝트 2','프로젝트 3', '프로젝트 4', '프로젝트 5'] 
+                },
+                options: { responsive : true, cutoutPercentage : 70,
+                    legend: {position : 'right', align: 'end', 
+                        labels: { boxWidth: 17, fontSize: 17, fontFamily: 'spoqaHanSans',  fontColor: 'black', padding: 12 }
+                    }
+                }
+            };
+            this.createChart('chart_objects', chartData);
+        })
+        .catch(err => {
+            alert(this.$errMsg);
+            console.log(err);
+        })
+    }
 }
 </script>
 
