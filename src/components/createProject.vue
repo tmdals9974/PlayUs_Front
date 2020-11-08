@@ -1,6 +1,6 @@
 <template>
     <main class="main-container">
-        <div class="sub-container-580">
+        <div class="sub-container-580" style="width:580px;">
             <span class="spoqaHanSans bold h2-like">프로젝트 생성하기</span>
 
             <section class="center-box" style="margin-top:8vh;">
