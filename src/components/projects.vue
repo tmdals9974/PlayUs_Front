@@ -29,14 +29,14 @@
                 <article class="stats bold h5-like">
                     <div class="container">
                         오브젝트 평균 크기
-                        <div class="spoqaHanSans regular h6-like">
-                            <article class="bar-chart" v-for="(item, index) in items" :key="index">
+                        <div v-bind:class="{ objSize : items.length > 2 }" class="spoqaHanSans regular h6-like">
+                            <article class="bar-chart" v-bind:style="{ marginTop : items.length > 2 ? '0' : '2vh' }" v-for="(item, index) in sortItemBySize" :key="index">
                                 <div class="legends">
                                     <span>{{item.name}}</span>
                                     <span>{{item.size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}}</span>
                                 </div>
                                 <div class="progress-bar">
-                                    <div class="percent" v-bind:style="{ backgroundColor : colors[index], width : (item.size/items[0].size) * 100 + '%'  }"></div>
+                                    <div class="percent" v-bind:style="{ backgroundColor : colors[index], width : (item.size/sortItemBySize[0].size) * 100 + '%'  }"></div>
                                 </div>
                             </article>
                         </div>
@@ -59,9 +59,11 @@ import Chart from "chart.js";
 export default {
     data() {
         return {
-            totalObjects : 1281,
-            items : [{ name : 'PROJECT 1', size : 35929 }, { name : 'PROJECT 2', size : 28854 }, { name : 'PROJECT 3', size : 12235 }, { name : 'PROJECT 4', size : 1843 }],
-            colors : ['#5f62e2','#7679f3','#9b9dfd', '#babbff', '#dedfff']
+            totalObjects: 1281,
+            items: [{ name: 'PlayUs', count: 7, size: 35929 }, { name: '여기야', count: 30, size: 28854 },
+                    { name: 'Pharmsland', count: 3, size: 12235 }, { name: '다해아이앤씨', count: 40, size: 1843 },
+                    { name: '대리운전', count: 20, size: 41232 }],
+            colors: ['#5f62e2', '#7679f3', '#9b9dfd', '#babbff', '#dedfff']
         }
     },
     methods: {
@@ -79,38 +81,56 @@ export default {
                 data: chartData.data,
                 options: chartData.options
             });
+        }
+    },
+    computed: {
+        sortItemBySize() {
+            return this.items.slice().sort((a,b) => {
+                if ( a.size > b.size ) { return -1; }
+                if ( a.size < b.size ) { return 1; }
+                return 0;
+            });
         },
-        getColor(index) {
-            console.log(this.colors[index]);
-            return this.colors[index];
+        sortItemByCount() {
+            return this.items.slice().sort((a,b) => {
+                if ( a.count > b.count ) { return -1; }
+                if ( a.count < b.count ) { return 1; }
+                return 0;
+            });
         }
     },
     mounted() {
         this.$http.get('projects/stats')
-        .then(result => {
-            if (!result.data.success)
-                return alert(this.$errMsg);
-            var chartData = {
-                type: 'doughnut',
-                //data: this.extract(result.data.details, 'objects'),
-                data: { 
-                    datasets: [{ backgroundColor: this.colors, weight: 1, data: [40, 30, 20, 7, 3] }],
-                    labels: ['프로젝트 1','프로젝트 2','프로젝트 3', '프로젝트 4', '프로젝트 5'] 
-                },
-                options: { cutoutPercentage : 65,
-                    legend: {position : 'right', align: 'end', 
-                        labels: { boxWidth: 17, fontSize: 17, fontFamily: 'spoqaHanSans',  fontColor: 'black', padding: 12 }
+            .then(result => {
+                if (!result.data.success)
+                    return alert(this.$errMsg);
+
+                Chart.defaults.global.defaultFontFamily='spoqaHanSans';
+
+                //도넛차트 생성코드
+                var doughnutChartData = {
+                    type: 'doughnut',
+                    data: {
+                        datasets: [{ backgroundColor: this.colors, weight: 1, data: this.extract(this.sortItemByCount, 'count') }],
+                        labels: this.extract(this.sortItemByCount, 'name')
+                    },
+                    options: {
+                        cutoutPercentage: 65,
+                        legend: {
+                            position: 'right', align: 'end',
+                            labels: { boxWidth: 17, fontSize: 17, fontColor: 'black', padding: 12 }
+                        }
                     }
-                }
-            };
-            this.createChart('chart_objects', chartData);
-        })
-        .catch(err => {
-            alert(this.$errMsg);
-            console.log(err);
-        })
+                };
+                this.createChart('chart_objects', doughnutChartData);
+            })
+            .catch(err => {
+                alert(this.$errMsg);
+                console.log(err);
+            })
     }
 }
+
 </script>
 
 <style scoped>
@@ -180,10 +200,14 @@ export default {
 
 .stats > .container {
     margin: 3vh 1.5vw;
+    height: 100%;
 }
 
-.bar-chart {
-    margin-top : 2vh;
+.stats > .container .objSize {
+    height: 80%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
 }
 
 .bar-chart > .legends {
