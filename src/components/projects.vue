@@ -42,10 +42,10 @@
                         </div>
                     </div>
                 </article>
-                <article class="stats bold h5-like" style="width:100%">
+                <article class="stats bold h5-like" style="width:100%; height:100%">
                     <div class="container">
-                        frequencyOfUse
-                        <canvas id="chart_frequencyOfUse"/>
+                        평균 사용 빈도
+                        <canvas id="chart_frequencyOfUse" style="margin-top:3vh;"/>
                     </div>
                 </article>
             </section>
@@ -60,9 +60,9 @@ export default {
     data() {
         return {
             totalObjects: 1281,
-            items: [{ name: 'PlayUs', count: 7, size: 35929 }, { name: '여기야', count: 30, size: 28854 },
-                    { name: 'Pharmsland', count: 3, size: 12235 }, { name: '다해아이앤씨', count: 40, size: 1843 },
-                    { name: '대리운전', count: 20, size: 41232 }],
+            items: [{ name: 'PlayUs', count: 7, size: 35929, use: [10, 3, 30, 23, 10, 5, 50] }, { name: '여기야', count: 30, size: 28854, use: [3, 20, 5, 7, 18, 42, 50] },
+                    { name: 'Pharmsland', count: 3, size: 12235, use: [70, 85, 82, 97, 113, 105, 87] }, { name: '다해아이앤씨', count: 40, size: 1843, use: [75, 72, 83, 69, 56, 41, 30] },
+                    { name: '대리운전', count: 20, size: 41232, use: [3, 2, 9, 7, 18, 21, 13] }],
             colors: ['#5f62e2', '#7679f3', '#9b9dfd', '#babbff', '#dedfff']
         }
     },
@@ -82,7 +82,38 @@ export default {
                 options: chartData.options
             });
         },
-            measureText(pText, pFontSize, pStyle) {
+        hexToRgb (hexType){ 
+            var hex = hexType.replace( "#", "" ); 
+            var value = hex.match( /[a-f\d]/gi ); 
+
+            // 헥사값이 세자리일 경우, 여섯자리로. 
+            if ( value.length == 3 ) hex = value[0] + value[0] + value[1] + value[1] + value[2] + value[2]; 
+            value = hex.match( /[a-f\d]{2}/gi ); 
+
+            var r = parseInt( value[0], 16 ); 
+            var g = parseInt( value[1], 16 ); 
+            var b = parseInt( value[2], 16 ); 
+
+            return `${r}, ${g}, ${b}`; 
+        },
+        getAreaChartDataSet(items, colors) {
+            var dataSet=[];
+            for (const index in items) {
+                var obj = {};
+                var refObj = items[index];
+                var color = colors[index];
+                var hex = this.hexToRgb(color);
+                obj.label = refObj.name;
+                obj.data = refObj.use;
+                obj.backgroundColor = `rgba(${hex}, 0.3)`;
+                obj.borderColor = `rgba(${hex}, 0.8)`;
+                obj.pointHoverBackgroundColor = color;
+
+                dataSet.push(obj);
+            }
+            return dataSet;
+        },
+        measureText(pText, pFontSize, pStyle) {
             var lDiv = document.createElement('div');
             document.body.appendChild(lDiv);
 
@@ -107,7 +138,6 @@ export default {
             return lResult;
         }
     },
-
     computed: {
         sortItemBySize() {
             return this.items.slice().sort((a,b) => {
@@ -152,7 +182,7 @@ export default {
                     }
                 };
                 this.createChart('chart_objects', doughnutChartData);
-                                
+                
                 // 도넛차트 - legends 길이에 따라 차트 중앙에 있는 글자 위치도 변경되어야 함.
                 var maxWidth = 0;
                 this.items.forEach(element => {
@@ -163,6 +193,35 @@ export default {
                 var totalObj = document.getElementById('totalObjects');
                 totalObj.style.marginLeft = 205-(maxWidth/2).toString() + 'px';
 
+                //line-areaChart 생성코드
+                var areaChartData = {
+                    type: 'line',
+                    data: {
+                        labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월'],
+                        datasets: this.getAreaChartDataSet(this.items, this.colors)
+                    },
+                    options: {
+                        responsive: true,
+                        elements: {
+                            point: { hoverRadius: 6, hoverBorderColor: 'white', hoverBorderWidth: 6 },
+                            fill: 'start'
+                        },
+                        tooltips: {
+                            mode: 'index', intersect: false, position: 'nearest', backgroundColor:'white',
+                            titleFontSize:20, titleFontColor:'black', titleAlign:'center', titleMarginBottom:13, 
+                            bodyFontSize:15, bodyFontColor:'black', bodySpacing:5, 
+                            borderWidth:1, borderColor:'#c9c9c9'
+                        },
+                        hover: {
+                            mode: 'index', intersect: false
+                        },
+                        legend: {
+                            position: 'right', align: 'end',
+                            labels: { boxWidth: 17, fontSize: 17, fontColor: 'black', padding: 12 }
+                        }
+                    }
+                }
+                this.createChart('chart_frequencyOfUse', areaChartData);
             })
             .catch(err => {
                 alert(this.$errMsg);
