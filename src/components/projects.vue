@@ -20,7 +20,7 @@
                     <div class="container">
                         오브젝트 수
                         <canvas id="chart_objects" />
-                        <div class="kanit h2-like" style="margin-top:-165px; margin-left:170px;">
+                        <div class="kanit h2-like" id="totalObjects" style="margin-top:-165px; margin-left:170px;">
                             {{ totalObjects }}
                             <p class="h6-like regular" style="margin-top:-10px; margin-left:10px;">TOTAL</p>
                         </div>
@@ -81,8 +81,33 @@ export default {
                 data: chartData.data,
                 options: chartData.options
             });
+        },
+            measureText(pText, pFontSize, pStyle) {
+            var lDiv = document.createElement('div');
+            document.body.appendChild(lDiv);
+
+            if (pStyle != null) {
+                lDiv.style = pStyle;
+            }
+            lDiv.style.fontSize = "" + pFontSize + "px";
+            lDiv.style.position = "absolute";
+            lDiv.style.left = -1000;
+            lDiv.style.top = -1000;
+
+            lDiv.innerHTML = pText;
+
+            var lResult = {
+                width: lDiv.clientWidth,
+                height: lDiv.clientHeight
+            };
+
+            document.body.removeChild(lDiv);
+            lDiv = null;
+
+            return lResult;
         }
     },
+
     computed: {
         sortItemBySize() {
             return this.items.slice().sort((a,b) => {
@@ -119,10 +144,25 @@ export default {
                         legend: {
                             position: 'right', align: 'end',
                             labels: { boxWidth: 17, fontSize: 17, fontColor: 'black', padding: 12 }
-                        }
+                        },
+                        tooltips: {
+                            backgroundColor:'white',
+                            bodyFontSize:15, bodyFontColor:'black', borderWidth:1, borderColor:'#c9c9c9'
+                        },
                     }
                 };
                 this.createChart('chart_objects', doughnutChartData);
+                                
+                // 도넛차트 - legends 길이에 따라 차트 중앙에 있는 글자 위치도 변경되어야 함.
+                var maxWidth = 0;
+                this.items.forEach(element => {
+                    var textWidth = this.measureText(element.name, '17', 'font-family: "SpoqaHanSans"').width
+                    if (maxWidth < textWidth)
+                        maxWidth = textWidth;
+                });
+                var totalObj = document.getElementById('totalObjects');
+                totalObj.style.marginLeft = 205-(maxWidth/2).toString() + 'px';
+
             })
             .catch(err => {
                 alert(this.$errMsg);
