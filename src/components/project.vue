@@ -1,6 +1,6 @@
 <template>
     <main class="main-container">
-        <div class="sub-container-1180">
+        <div class="sub-container-1180" style="width:1180px;">
             <span class="spoqaHanSans bold h2-like">{{ $route.params.name }}</span>
             <section class="tab-menu spoqaHanSans bold h5-like">
                 <span v-for="(tab, index) in tabs" v-bind:key="index" v-bind:class="{active : tab.title === selectedTab}" @click="selectedTab = tab.title">

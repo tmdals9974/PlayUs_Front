@@ -51,16 +51,16 @@ export default {
     },
     methods: {
         login() {
-            var input_email = document.querySelector('#loginBox_email');
-            var email = input_email.value.trim();
+            const input_email = document.querySelector('#loginBox_email');
+            const email = input_email.value.trim();
 
             if (!email) { 
                 alert('이메일을 입력해주세요.'); 
                 return input_email.focus(); 
             }
 
-            var input_password = document.querySelector('#loginBox_pw');
-            var password = input_password.value.trim();
+            const input_password = document.querySelector('#loginBox_pw');
+            const password = input_password.value.trim();
 
             if (!password) { 
                 alert('비밀번호를 입력해주세요.'); 
@@ -72,7 +72,7 @@ export default {
                 if (!result.data.success) 
                     return alert(result.data.msg);
 
-                var user = { email, project : result.data.details };
+                const user = { email, project : result.data.details };
                 this.$store.commit('setUser', user);
                 this.$router.push(this.$store.getters.hasProject ? '/projects' : '/createProject');
             })
@@ -83,8 +83,8 @@ export default {
         },
         
         idCheck() {
-            var input_email = document.querySelector('#joinBox_email');
-            var email = input_email.value.trim();
+            const input_email = document.querySelector('#joinBox_email');
+            const email = input_email.value.trim();
 
             if (!email) return;
 
@@ -106,21 +106,21 @@ export default {
             if (!this.idChecked)
                 return alert("이미 가입된 이메일입니다.");
 
-            var input_email = document.querySelector('#joinBox_email');
-            var email = input_email.value.trim();
+            const input_email = document.querySelector('#joinBox_email');
+            const email = input_email.value.trim();
             if (!email) { 
                 alert('이메일을 입력해주세요.'); 
                 return input_email.focus(); 
             }
 
-            var input_password = document.querySelector('#joinBox_pw');
-            var password = input_password.value.trim();
+            const input_password = document.querySelector('#joinBox_pw');
+            const password = input_password.value.trim();
             if (!password) { 
                 alert('비밀번호를 입력해주세요.'); 
                 return input_password.focus(); 
             }
 
-            var receiveMail = document.querySelector('#chk_receiveMail').checked;
+            const receiveMail = document.querySelector('#chk_receiveMail').checked;
 
             this.$http.post('users/', {email, password, receiveMail})
             .then(result => {

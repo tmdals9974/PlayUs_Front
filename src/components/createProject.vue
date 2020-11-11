@@ -53,10 +53,10 @@ export default {
     },
     methods: {
         postTest() {
-            var name = this.projectName;
-            var returnType = this.returnType;
-            var lock = this.isLock;
-            var content = this.content;
+            const name = this.projectName;
+            const returnType = this.returnType;
+            const lock = this.isLock;
+            const content = this.content;
 
             this.$http.post('projects', {name, returnType, lock, content})
             .then(result => {

@@ -31,7 +31,7 @@ export const store = new Vuex.Store({
         getEmail(state) {
             if (state.user === null)
                 return '';
-            var id = state.user.email.split('@')[0];
+            const id = state.user.email.split('@')[0];
             return id.length < 6 ? id : id.substr(0, 5);            
         }
     },
