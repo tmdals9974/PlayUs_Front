@@ -8,7 +8,7 @@
                     <span class="spoqaHanSans bold h5-like" style="margin-top:1vh;">프로젝트 생성하기</span>
                 </article>
 
-                <article class="project" v-for="(item, index) in $store.state.user.project" v-bind:key="index" @click="$router.push({ name: 'project', params: { name: item.name }})">
+                <article class="project" v-for="(item, index) in $store.state.user.project" v-bind:key="index" @click="$router.push({ name: 'project', params: { _id: item._id }})">
                     <span class="spoqaHanSans bold h5-like">{{item.name}}</span>
                     <span class="spoqaHanSans regular h6-like" style="white-space: pre-line">{{item.content}}</span>
                 </article>

@@ -1,7 +1,7 @@
 <template>
     <main class="main-container">
         <div class="sub-container-1180" style="width:1180px;">
-            <span class="spoqaHanSans bold h2-like">{{ $route.params.name }}</span>
+            <span class="spoqaHanSans bold h2-like">{{ this.project.name }}</span>
             <section class="tab-menu spoqaHanSans bold h5-like">
                 <span v-for="(tab, index) in tabs" v-bind:key="index" v-bind:class="{active : tab.title === selectedTab}" @click="selectedTab = tab.title">
                     {{ tab.title }} <div v-if="tab.subMenu" class="arrow"/>
@@ -30,6 +30,12 @@
                     </div>                
                 </div>
             </section>
+
+            <section v-show="selectedTab === tabs[1].title">
+                <div v-for="(item, index) in project.collection" :key="index" >
+                    {{ item }}
+                </div>
+            </section>
         </div>
     </main>
 
@@ -40,8 +46,27 @@ export default {
     data() {
         let tabs = [ {title: "상세 통계", subMenu : false }, {title: "DB 관리", subMenu : true }, {title: "API 관리", subMenu : true } ];
         return {
-            tabs, selectedTab : tabs[0].title
+            tabs, 
+            selectedTab : tabs[0].title,
+            project: {
+                _id : '',
+                name : '',
+                collection : []
+            }
         }
+    },
+    mounted() {
+        this.project = this.$store.state.user.project.find(obj => obj._id === this.$route.params._id);
+        this.$http.get(`projects/${this.project._id}/collections`)
+        .then(result => {
+            if (!result.data.success)
+                return alert(result.data.msg);
+            this.project.collection = result.data.details;
+        })
+        .catch(err => {
+            alert(this.$errMsg);
+            console.log(err);
+        })
     },
 }
 </script>
