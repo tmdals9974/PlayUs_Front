@@ -8,7 +8,7 @@
                 </span>
             </section>
 
-            <section v-show="selectedTab === tabs[0].title" class="tab-content">
+            <section v-show="selectedTab === tabs[0].title" class="tab-content-stats">
                 <div class="card">
                     <div class="container spoqaHanSans bold h5-like">
                         그래프 1
@@ -31,10 +31,25 @@
                 </div>
             </section>
 
-            <section v-show="selectedTab === tabs[1].title">
-                <div v-for="(item, index) in project.collection" :key="index" >
+            <section v-show="selectedTab === tabs[1].title" style="margin-top:2vh;">
+                <div class="spoqaHanSans h5-like collection" @click="showModal=true">새 컬렉션 만들기</div>
+                <div class="spoqaHanSans h5-like collection" v-for="(item, index) in project.collection" :key="index" >
                     {{ item }}
                 </div>
+
+                <modal v-if="showModal">
+                    <h3 slot="header" class="spoqaHanSans h5-like">컬렉션 생성</h3>
+                    <div slot="body">
+                        <article class="span-input-set spoqaHanSans h6-like">
+                            <span>컬렉션 이름</span>
+                            <input class="items" type="text" v-model="newCollectionName"/>
+                        </article>
+                    </div>
+                    <div slot="footer">
+                        <input type="button" class="cancel" value="취소" @click="showModal=false">
+                        <input type="button" class="save" value="다음">
+                    </div>
+                </modal>
             </section>
         </div>
     </main>
@@ -42,6 +57,8 @@
 </template>
 
 <script>
+import Modal from './common/Modal.vue'
+
 export default {
     data() {
         let tabs = [ {title: "상세 통계", subMenu : false }, {title: "DB 관리", subMenu : true }, {title: "API 관리", subMenu : true } ];
@@ -52,7 +69,10 @@ export default {
                 _id : '',
                 name : '',
                 collection : []
-            }
+            },
+
+            showModal: false,
+            newCollectionName: '',
         }
     },
     mounted() {
@@ -68,10 +88,13 @@ export default {
             console.log(err);
         })
     },
+    components: {
+        Modal
+    }
 }
 </script>
 
-<style>
+<style scoped>
 .tab-menu {
     display: flex;
     flex-flow: row nowrap;
@@ -118,7 +141,7 @@ export default {
     color: #5F62E2;
 }
 
-.tab-content {
+.tab-content-stats {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
@@ -141,4 +164,15 @@ export default {
     margin: 3vh 1.5vw;
 }
 
+.collection {
+    margin-left:2vw; 
+    color:#9e9e9e;
+    cursor: pointer;
+}
+
+.collection:hover {
+    color:#5F62E2;
+    font-weight: bold;
+    text-decoration: underline;
+}
 </style>
