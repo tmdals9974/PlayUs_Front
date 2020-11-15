@@ -78,7 +78,7 @@ export default {
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
-    padding: 2.5vh 0 2.5vh 1.5vw;
+    padding: 2.5vh 0 0 1.5vw;
 }
 
 .modal-body .span-input-set span {

@@ -32,12 +32,12 @@
             </section>
 
             <section v-show="selectedTab === tabs[1].title" style="margin-top:2vh;">
-                <div class="spoqaHanSans h5-like collection" @click="showModal=true">새 컬렉션 만들기</div>
+                <div class="spoqaHanSans h5-like collection" @click="showModal=1">새 컬렉션 만들기</div>
                 <div class="spoqaHanSans h5-like collection" v-for="(item, index) in project.collection" :key="index" >
                     {{ item }}
                 </div>
 
-                <modal v-if="showModal">
+                <modal v-if="showModal==1">
                     <h3 slot="header" class="spoqaHanSans h5-like">컬렉션 생성</h3>
                     <div slot="body">
                         <article class="span-input-set spoqaHanSans h6-like">
@@ -46,8 +46,36 @@
                         </article>
                     </div>
                     <div slot="footer">
-                        <input type="button" class="cancel" value="취소" @click="showModal=false">
-                        <input type="button" class="save" value="다음">
+                        <input type="button" class="cancel" value="취소" @click="showModal=0">
+                        <input type="button" class="save" value="다음" @click="showModal=2">
+                    </div>
+                </modal>
+
+                <modal v-if="showModal==2">
+                    <h3 slot="header" class="spoqaHanSans h5-like">컬렉션 생성 - {{ newCollectionName }}</h3>
+                    <div slot="body">
+                        <article class="span-input-set spoqaHanSans h6-like">
+                            <span>필드 이름</span>
+                            <input class="items" type="text" v-model="newFieldName"/>
+                        </article>
+                        <div class="test">
+                            <div class="span-input-set spoqaHanSans h6-like" style="padding-left:0">
+                                <div class="test2"> </div>
+                                <span>필드 타입</span>
+                                <select class="items" name="fieldDataType" id="fieldDataType">
+                                    <option value="">String</option>
+                                    <option value="">Number</option>
+                                    <option value="">Boolean</option>
+                                    <option value="">Array</option>
+                                    <option value="">Date</option>
+                                    <option value="">Map</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div slot="footer">
+                        <input type="button" class="cancel" value="취소" @click="showModal=0">
+                        <input type="button" class="save" value="저장" @click="showModal=0">
                     </div>
                 </modal>
             </section>
@@ -71,8 +99,9 @@ export default {
                 collection : []
             },
 
-            showModal: false,
+            showModal: 0,
             newCollectionName: '',
+            newFieldName: ''
         }
     },
     mounted() {
@@ -95,6 +124,24 @@ export default {
 </script>
 
 <style scoped>
+.test {
+    border:none;
+    border-left: 1.5px dashed #BCBCBC;
+    background-color:#fff;
+    height:40px;
+    margin-left: 3.4vw;
+}
+
+.test2 {
+    border:none;
+    border-top: 1.5px dashed #BCBCBC;
+    background-color:#fff;
+    width: 20px;
+    margin-left: -7px;
+    margin-top: 15px;
+}
+
+
 .tab-menu {
     display: flex;
     flex-flow: row nowrap;
