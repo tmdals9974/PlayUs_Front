@@ -42,7 +42,7 @@
                     <div slot="body">
                         <article class="span-input-set spoqaHanSans h6-like">
                             <span>컬렉션 이름</span>
-                            <input class="items" type="text" v-model="newCollectionName"/>
+                            <input class="items" type="text" v-model="newCollectionName" @keyup.enter="showModal=2"/>
                         </article>
                     </div>
                     <div slot="footer">
@@ -61,7 +61,7 @@
                         <div class="test">
                             <div class="span-input-set spoqaHanSans h6-like" style="padding-left:0">
                                 <div class="test2"> </div>
-                                <span>필드 타입</span>
+                                <span style="margin-left:10px">필드 타입</span>
                                 <select class="items" name="fieldDataType" id="fieldDataType">
                                     <option value="">String</option>
                                     <option value="">Number</option>
@@ -70,6 +70,13 @@
                                     <option value="">Date</option>
                                     <option value="">Map</option>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="test">
+                            <div class="span-input-set spoqaHanSans h6-like" style="padding-left:0">
+                                <div class="test2"> </div>
+                                <span style="margin-left:10px">기본값</span>
+                                <input type="text" class="items" name="" id=""/>
                             </div>
                         </div>
                     </div>
@@ -137,7 +144,6 @@ export default {
     border-top: 1.5px dashed #BCBCBC;
     background-color:#fff;
     width: 20px;
-    margin-left: -7px;
     margin-top: 15px;
 }
 
