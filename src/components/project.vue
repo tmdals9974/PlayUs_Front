@@ -79,6 +79,7 @@
                                         <span>기본값</span>
                                         <input type="text" class="item h6-like">
                                     </div>
+                                    <div class="field-minus"> </div>
                                 </div>
                             </div>
                         </div>
@@ -142,6 +143,19 @@ export default {
 </script>
 
 <style scoped>
+.field-minus {
+    margin: 38px 10px;
+    width:20px; 
+    height:20px; 
+    cursor:pointer;
+    background-image: url('../assets/images/minus.png');
+    background-size: cover;
+}
+
+.field-minus:hover {
+    background-image: url('../assets/images/minus_hover.png');
+}
+
 .field-plus {
     width:20px; 
     height:20px; 
