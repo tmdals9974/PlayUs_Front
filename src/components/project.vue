@@ -52,31 +52,42 @@
                 </modal>
 
                 <modal v-if="showModal==2">
-                    <h3 slot="header" class="spoqaHanSans h5-like">컬렉션 생성 - {{ newCollectionName }}</h3>
-                    <div slot="body">
-                        <article class="span-input-set spoqaHanSans h6-like">
-                            <span>필드 이름</span>
-                            <input class="items" type="text" v-model="newFieldName"/>
-                        </article>
-                        <div class="test">
-                            <div class="span-input-set spoqaHanSans h6-like" style="padding-left:0">
-                                <div class="test2"> </div>
-                                <span style="margin-left:10px">필드 타입</span>
-                                <select class="items" name="fieldDataType" id="fieldDataType">
-                                    <option value="">String</option>
-                                    <option value="">Number</option>
-                                    <option value="">Boolean</option>
-                                    <option value="">Array</option>
-                                    <option value="">Date</option>
-                                    <option value="">Map</option>
-                                </select>
+                    <h3 slot="header" class="spoqaHanSans h5-like">컬렉션 생성</h3>
+                    <div slot="body" class="spoqaHanSans">
+                        <span class="h5-like" style="margin-left:30px;">{{ newCollectionName }}</span>
+                        <div class="vertical-line">
+                            <div style="display:flex; flex-flow:row nowrap">
+                                <div class="horizontal-line"></div>
+                                <div class="h6-like new-field">
+                                    <div class="vertical-span-item-set">
+                                        <span>필드</span>
+                                        <input type="text" class="item h6-like" v-model="newFieldName">
+                                    </div>
+                                    <span style="padding : 35px 10px;">=</span>
+                                    <div class="vertical-span-item-set">
+                                        <span>타입</span>
+                                        <select class="item h6-like" name="fieldDataType" id="fieldDataType">
+                                            <option value="">String</option>
+                                            <option value="">Number</option>
+                                            <option value="">Boolean</option>
+                                            <option value="">Array</option>
+                                            <option value="">Date</option>
+                                            <option value="">Map</option>
+                                        </select>
+                                    </div>
+                                    <div class="vertical-span-item-set" style="margin-left:5px">
+                                        <span>기본값</span>
+                                        <input type="text" class="item h6-like">
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="test">
-                            <div class="span-input-set spoqaHanSans h6-like" style="padding-left:0">
-                                <div class="test2"> </div>
-                                <span style="margin-left:10px">기본값</span>
-                                <input type="text" class="items" name="" id=""/>
+                        <div class="vertical-line">
+                            <div style="display:flex; flex-flow:row nowrap">
+                                <div class="horizontal-line"></div>
+                                <div class="h6-like new-field">
+                                    <div class="field-plus"> </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -131,22 +142,60 @@ export default {
 </script>
 
 <style scoped>
-.test {
+.field-plus {
+    width:20px; 
+    height:20px; 
+    margin:40px 0 0 3px; 
+    cursor:pointer;
+    background-image: url('../assets/images/plus.png');
+    background-size: cover;
+}
+
+.field-plus:hover {
+    background-image: url('../assets/images/plus_hover.png');
+}
+
+.vertical-span-item-set > select.item {
+    padding: 4px;
+}
+
+.vertical-span-item-set > .item {
+    width:130px; 
+    padding: 5px; 
+    border-radius:4px; 
+    border: 1px solid #9f9f9e;
+}
+
+.vertical-span-item-set > span {
+    padding-bottom: 10px;
+    color:#707070;
+}
+
+.vertical-span-item-set {
+    display:flex; 
+    flex-flow:column nowrap; 
+    align-content:center;
+}
+
+.new-field {
+    display:flex; 
+    flex-flow:row nowrap; 
+    padding:40px 0 0 0;
+}
+
+.vertical-line {
     border:none;
     border-left: 1.5px dashed #BCBCBC;
-    background-color:#fff;
-    height:40px;
-    margin-left: 3.4vw;
+    height:90px;
+    margin-left: 2.5vw;
 }
 
-.test2 {
+.horizontal-line {
     border:none;
-    border-top: 1.5px dashed #BCBCBC;
-    background-color:#fff;
-    width: 20px;
-    margin-top: 15px;
+    height: 90px;
+    border-bottom: 1.5px dashed #BCBCBC;
+    width: 25px;
 }
-
 
 .tab-menu {
     display: flex;
