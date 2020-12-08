@@ -53,11 +53,12 @@ export default {
 .modal-container {
     width: 650px;
     margin: 0px auto;
-    /* padding: 20px 30px; */
     background-color: #fff;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
     transition: all .3s ease;
+    max-height: 660px;
+    overflow-y: auto;
 }
 
 .modal-header h3 {
@@ -65,6 +66,7 @@ export default {
     color: white;
     border-radius: 12px 12px 0 0;
     background-color:#7679f3;
+    margin: 0 auto;
 }
 
 .modal-body {

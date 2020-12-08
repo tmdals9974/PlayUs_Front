@@ -46,8 +46,8 @@
                         </article>
                     </div>
                     <div slot="footer">
-                        <input type="button" class="cancel" value="취소" @click="showModal=0">
-                        <input type="button" class="save" value="다음" @click="showModal=2">
+                        <input type="button" class="smallPlainButton spoqaHanSans h6-like" value="취소" @click="createCollectionCancel()">
+                        <input type="button" class="smallThemeButton spoqaHanSans h6-like" value="다음" @click="createCollectionNext()">
                     </div>
                 </modal>
 
@@ -55,56 +55,31 @@
                     <h3 slot="header" class="spoqaHanSans h5-like">컬렉션 생성</h3>
                     <div slot="body" class="spoqaHanSans">
                         <span class="h5-like" style="margin-left:30px;">{{ newCollectionName }}</span>
+                        <field v-for="(item) in fields" :key="item">
+                            <div class="field-minus" @click="fields.splice(fields.indexOf(item), 1);"> </div>
+                        </field>
                         <div class="vertical-line">
                             <div style="display:flex; flex-flow:row nowrap">
                                 <div class="horizontal-line"></div>
                                 <div class="h6-like new-field">
-                                    <div class="vertical-span-item-set">
-                                        <span>필드</span>
-                                        <input type="text" class="item h6-like" v-model="newFieldName">
-                                    </div>
-                                    <span style="padding : 35px 10px;">=</span>
-                                    <div class="vertical-span-item-set">
-                                        <span>타입</span>
-                                        <select class="item h6-like" name="fieldDataType" id="fieldDataType">
-                                            <option value="">String</option>
-                                            <option value="">Number</option>
-                                            <option value="">Boolean</option>
-                                            <option value="">Array</option>
-                                            <option value="">Date</option>
-                                            <option value="">Map</option>
-                                        </select>
-                                    </div>
-                                    <div class="vertical-span-item-set" style="margin-left:5px">
-                                        <span>기본값</span>
-                                        <input type="text" class="item h6-like">
-                                    </div>
-                                    <div class="field-minus"> </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="vertical-line">
-                            <div style="display:flex; flex-flow:row nowrap">
-                                <div class="horizontal-line"></div>
-                                <div class="h6-like new-field">
-                                    <div class="field-plus"> </div>
+                                    <div class="field-plus" @click="fields.push(++fieldCount)"> </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div slot="footer">
-                        <input type="button" class="cancel" value="취소" @click="showModal=0">
-                        <input type="button" class="save" value="저장" @click="showModal=0">
+                        <input type="button" class="smallPlainButton spoqaHanSans h6-like" value="취소" @click="createCollectionCancel()">
+                        <input type="button" class="smallThemeButton spoqaHanSans h6-like" value="저장" @click="createCollection()">
                     </div>
                 </modal>
             </section>
         </div>
     </main>
-
 </template>
 
 <script>
-import Modal from './common/Modal.vue'
+import modal from './common/modal.vue';
+import field from './common/field.vue';
 
 export default {
     data() {
@@ -120,8 +95,30 @@ export default {
 
             showModal: 0,
             newCollectionName: '',
-            newFieldName: ''
+            fields: [0],
+            fieldCount: 0
         }
+    },
+    methods: {
+        createCollectionCancel() {
+            this.showModal = 0;
+            this.createCollectionClear();
+        },
+        createCollectionNext() {
+            if (this.newCollectionName == '')
+                return alert('컬렉션 이름을 입력해주세요.');
+            this.showModal = 2;
+        },
+        createCollectionClear() {
+            this.showModal = 0;
+            this.newCollectionName = '';
+            this.fields = [0];
+            this.fieldCount = 0;
+        },
+        createCollection() {
+            this.project.collection.push(this.newCollectionName);
+            this.createCollectionClear();
+        },
     },
     mounted() {
         this.project = this.$store.state.user.project.find(obj => obj._id === this.$route.params._id);
@@ -137,13 +134,30 @@ export default {
         })
     },
     components: {
-        Modal
+        modal, field
     }
 }
 </script>
 
 <style scoped>
-.field-minus {
+.smallThemeButton {
+    background-color: #5F62E2;
+    color: white;
+    border-radius: 4px;
+    border-style: none;
+    cursor: pointer;
+    outline: none;
+    padding: 3px 8px;
+}
+
+.smallPlainButton {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    padding: 3px 8px;
+}
+
+>>> .field-minus {
     margin: 38px 10px;
     width:20px; 
     height:20px; 
@@ -152,11 +166,11 @@ export default {
     background-size: cover;
 }
 
-.field-minus:hover {
+>>> .field-minus:hover {
     background-image: url('../assets/images/minus_hover.png');
 }
 
-.field-plus {
+>>> .field-plus {
     width:20px; 
     height:20px; 
     margin:40px 0 0 3px; 
@@ -165,50 +179,50 @@ export default {
     background-size: cover;
 }
 
-.field-plus:hover {
+>>> .field-plus:hover {
     background-image: url('../assets/images/plus_hover.png');
 }
 
-.vertical-span-item-set > select.item {
+>>> .vertical-span-item-set > select.item {
     padding: 4px;
 }
 
-.vertical-span-item-set > .item {
+>>> .vertical-span-item-set > .item {
     width:130px; 
     padding: 5px; 
     border-radius:4px; 
     border: 1px solid #9f9f9e;
 }
 
-.vertical-span-item-set > span {
+>>> .vertical-span-item-set > span {
     padding-bottom: 10px;
     color:#707070;
 }
 
-.vertical-span-item-set {
+>>> .vertical-span-item-set {
     display:flex; 
     flex-flow:column nowrap; 
     align-content:center;
 }
 
-.new-field {
+>>> .new-field {
     display:flex; 
     flex-flow:row nowrap; 
-    padding:40px 0 0 0;
+    margin:40px 0 0 0;
 }
 
-.vertical-line {
-    border:none;
-    border-left: 1.5px dashed #BCBCBC;
-    height:90px;
-    margin-left: 2.5vw;
-}
-
-.horizontal-line {
+>>> .horizontal-line {
     border:none;
     height: 90px;
     border-bottom: 1.5px dashed #BCBCBC;
     width: 25px;
+}
+
+>>> .vertical-line {
+    border:none;
+    border-left: 1.5px dashed #BCBCBC;
+    height:90px;
+    margin-left: 2.5vw;
 }
 
 .tab-menu {
