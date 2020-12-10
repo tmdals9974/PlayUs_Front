@@ -55,14 +55,14 @@
                     <h3 slot="header" class="spoqaHanSans h5-like">컬렉션 생성</h3>
                     <div slot="body" class="spoqaHanSans">
                         <span class="h5-like" style="margin-left:30px;">{{ newCollectionName }}</span>
-                        <field v-for="(item) in fields" :key="item">
-                            <div class="field-minus" @click="fields.splice(fields.indexOf(item), 1);"> </div>
+                        <field v-for="item in fields" :key="item.num" :num="item.num" v-on:nameChange="nameChange" v-on:typeChange="typeChange" v-on:defaultChange="defaultChange">
+                            <div class="field-minus" @click="fields.splice(fields.findIndex(field => field.num === item.num), 1);"> </div>
                         </field>
                         <div class="vertical-line">
                             <div style="display:flex; flex-flow:row nowrap">
                                 <div class="horizontal-line"></div>
                                 <div class="h6-like new-field">
-                                    <div class="field-plus" @click="fields.push(++fieldCount)"> </div>
+                                    <div class="field-plus" @click="fields.push({num : ++fieldCount,  type : 'String', default : ''})"> </div>
                                 </div>
                             </div>
                         </div>
@@ -95,7 +95,7 @@ export default {
 
             showModal: 0,
             newCollectionName: '',
-            fields: [0],
+            fields: [{num : 0, type : 'String', default : ''}],
             fieldCount: 0
         }
     },
@@ -116,9 +116,30 @@ export default {
             this.fieldCount = 0;
         },
         createCollection() {
-            this.project.collection.push(this.newCollectionName);
-            this.createCollectionClear();
+            this.$http.post(`projects/${this.project._id}/collections`, this.newCollectionName)
+            .then(result => {
+                if (!result.data.success) 
+                    return alert(result.data.msg);
+                this.project.collection.push(this.newCollectionName);
+                this.createCollectionClear();
+            })
+            .catch(err => {
+                alert(this.$errMsg);
+                console.log(err);
+            })
         },
+        nameChange(num, data) {
+            const index = this.fields.findIndex(field => field.num === num);
+            this.fields[index].name = data;
+        },
+        typeChange(num, data) {
+            const index = this.fields.findIndex(field => field.num === num);
+            this.fields[index].type = data;
+        },
+        defaultChange(num, data) {
+            const index = this.fields.findIndex(field => field.num === num);
+            this.fields[index].default = data;
+        }
     },
     mounted() {
         this.project = this.$store.state.user.project.find(obj => obj._id === this.$route.params._id);
@@ -158,7 +179,7 @@ export default {
 }
 
 >>> .field-minus {
-    margin: 38px 10px;
+    margin: 38px 0px 0px 10px;
     width:20px; 
     height:20px; 
     cursor:pointer;
