@@ -95,7 +95,7 @@ export default {
 
             showModal: 0,
             newCollectionName: '',
-            fields: [{num : 0, type : 'String', default : ''}],
+            fields: [{num : 0, name : '', type : 'String', default : ''}],
             fieldCount: 0
         }
     },
@@ -116,7 +116,12 @@ export default {
             this.fieldCount = 0;
         },
         createCollection() {
-            this.$http.post(`projects/${this.project._id}/collections`, this.newCollectionName)
+            this.fields.map(item => { delete item.num; return item; });
+            
+            this.$http.post(`projects/${this.project._id}/collections`, {
+                collectionName : this.newCollectionName,
+                collectionRules : this.fields
+            })
             .then(result => {
                 if (!result.data.success) 
                     return alert(result.data.msg);
