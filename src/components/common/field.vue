@@ -4,7 +4,7 @@
             <div class="horizontal-line"></div>
             <div class="h6-like new-field">
                 <div class="vertical-span-item-set">
-                    <span>필드</span>
+                    <span>필드명</span>
                     <input type="text" class="item h6-like" v-model="fieldName" @blur="nameChange()">
                 </div>
                 <span style="padding : 35px 10px;">=</span>
@@ -19,8 +19,11 @@
                     </select>
                 </div>
                 <div class="vertical-span-item-set" style="margin-left:5px" v-show="defaultInputShow">
-                    <span>기본값</span>
-                    <input type="text" class="item h6-like" v-model="fieldDefault" ref="default" @blur="defaultChange()" :placeholder="defaultPlaceholder">
+                    <span style="display:flex">기본값&nbsp;
+                        <input type="checkbox" id="useDefault" v-model="useDefault" @change="fieldDefault = ''">
+                        <label class="checkbox_border" for="useDefault"></label> 
+                    </span>
+                    <input type="text" class="item h6-like" v-model="fieldDefault" ref="default" @blur="defaultChange()" :placeholder="defaultPlaceholder" :disabled="!useDefault">
                 </div>
                 <slot></slot>
             </div>
@@ -39,6 +42,7 @@ export default {
             typeCheck: false,
             defaultPlaceholder: '',
             defaultInputShow: true,
+            useDefault: false
         }
     },
     methods: {
@@ -100,5 +104,21 @@ export default {
 <style scoped>
 .vertical-span-item-set input[type="text"]:disabled {
     background-color: gainsboro;
+}
+
+label.checkbox_border {
+    border: 1px solid #707070;
+    border-radius: 4px;
+    padding-left: 17px;
+    height: 17px;
+    display: inline-block;
+    align-self: center;
+    margin-left: 5px;
+    background-size: contain;
+    cursor: pointer;
+}
+
+input[type="checkbox"]:checked + label.checkbox_border {
+    background-image: url('../../assets/images/checked_checkbox.png');
 }
 </style>
