@@ -20,8 +20,8 @@
                 </div>
                 <div class="vertical-span-item-set" style="margin-left:5px" v-show="defaultInputShow">
                     <span style="display:flex">기본값&nbsp;
-                        <input type="checkbox" id="useDefault" v-model="useDefault" @change="fieldDefault = ''">
-                        <label class="checkbox_border" for="useDefault"></label> 
+                        <input type="checkbox" :id="'useDefault' + num" v-model="useDefault" @change="defaultCheck()">
+                        <label class="checkbox_border" :for="'useDefault' + num"></label> 
                     </span>
                     <input type="text" class="item h6-like" v-model="fieldDefault" ref="default" @blur="defaultChange()" :placeholder="defaultPlaceholder" :disabled="!useDefault">
                 </div>
@@ -38,7 +38,7 @@ export default {
         return {
             fieldName: '',
             fieldType: 'String',
-            fieldDefault: '',
+            fieldDefault: undefined,
             typeCheck: false,
             defaultPlaceholder: '',
             defaultInputShow: true,
@@ -96,6 +96,10 @@ export default {
         },
         nameChange() {
             this.$emit('nameChange', this.num, this.fieldName);
+        },
+        defaultCheck() {
+            this.fieldDefault = this.useDefault ? '' : undefined;
+            this.$emit('defaultChange', this.num, this.fieldDefault);
         }
     },
 }

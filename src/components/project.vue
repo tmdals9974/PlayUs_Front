@@ -62,7 +62,7 @@
                             <div style="display:flex; flex-flow:row nowrap">
                                 <div class="horizontal-line"></div>
                                 <div class="h6-like new-field">
-                                    <div class="field-plus" @click="fields.push({num : ++fieldCount,  type : 'String', default : ''})"> </div>
+                                    <div class="field-plus" @click="fields.push({num : ++fieldCount,  type : 'String', default : undefined})"> </div>
                                 </div>
                             </div>
                         </div>
@@ -95,7 +95,7 @@ export default {
 
             showModal: 0,
             newCollectionName: '',
-            fields: [{num : 0, name : '', type : 'String', default : ''}],
+            fields: [{num : 0, name : '', type : 'String', default : undefined}],
             fieldCount: 0
         }
     },
